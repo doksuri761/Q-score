@@ -1,9 +1,8 @@
-#Developed by dgm
+# Developed by dgm
 from dotenv import load_dotenv
 from os import getenv
 from nextcord.ext.commands import Bot
 import sqlite3
-
 
 env = load_dotenv(".env")
 token = getenv("token")
@@ -27,14 +26,14 @@ async def 등록(ctx):
 
 
 @bot.command()
-async def 나락(ctx):
+async def 떡락(ctx):
     sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
     cur.execute(sql)
     query = cur.fetchone()
     if query is None:
-        await ctx.channel.send("일단 등록부터 하고 오셔~")
+        await ctx.channel.send("일단 \!등록부터 하고 오셔~")
     else:
-        nick = ctx.message.content.replace("!나락 ", "")
+        nick = ctx.message.content.replace("!떡락 ", "")
         sql = f"select * from user where(nick=\"{nick}\")"
         cur.execute(sql)
         query = cur.fetchone()
@@ -42,7 +41,26 @@ async def 나락(ctx):
         cur.execute(sql)
         db.commit()
         print(query)
-        await ctx.channel.send(nick + "님의 이미지가 1 감소했어요.")
+        await ctx.channel.send(nick + "님의 이미지가 1 떡락했어요.")
+
+
+@bot.command()
+async def 떡상(ctx):
+    sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
+    cur.execute(sql)
+    query = cur.fetchone()
+    if query is None:
+        await ctx.channel.send("일단 \!등록부터 하고 오셔~")
+    else:
+        nick = ctx.message.content.replace("!떡상 ", "")
+        sql = f"select * from user where(nick=\"{nick}\")"
+        cur.execute(sql)
+        query = cur.fetchone()
+        sql = f"update user set image={query[0] + 1} where(nick=\"{nick}\")"
+        cur.execute(sql)
+        db.commit()
+        print(query)
+        await ctx.channel.send(nick + "님의 이미지가 1 떡상했어요.")
 
 
 @bot.command()
