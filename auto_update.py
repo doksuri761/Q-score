@@ -16,8 +16,7 @@ while True:
     elif data == "update":
         print("Wait for bot off")
         time.sleep(1)
-        os.popen("git add main.py")
-        os.popen('git commit -m "except error"')
+        os.popen('git reset --hard HEAD')
         os.popen("git pull github master")
         time.sleep(5)
         subprocess.run(['nohup', 'python3', 'main.py', '>', 'nohup.out'])
