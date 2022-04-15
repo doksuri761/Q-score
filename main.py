@@ -96,7 +96,7 @@ async def 이미지(ctx):
 
 @bot.command()
 async def ver(ctx):
-    await ctx.channel.send("update ver.")
+    await ctx.channel.send("update2 ver.")
 
 
 @bot.command()
