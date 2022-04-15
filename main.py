@@ -1,14 +1,30 @@
 # Developed by dgm
+import asyncio
+import os
+import sys
 from dotenv import load_dotenv
 from os import getenv
 from nextcord.ext.commands import Bot
 import sqlite3
+import socket
 
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
-token = getenv("token")
+is_test = True
+
+if not is_test:
+    token = getenv("token")
+else:
+    token = getenv("test_token")
 db = sqlite3.connect("image.db")
 cur = db.cursor()
 bot = Bot(command_prefix="!")
+
+
+@bot.event
+async def on_ready():
+    sock.sendto(str(os.getpid()).encode(), ('127.0.0.1', 8080))
+    print("ready!")
 
 
 @bot.command()
@@ -76,6 +92,27 @@ async def 이미지(ctx):
         cur.execute(sql)
         query = cur.fetchone()
         await ctx.channel.send(nick.capitalize() + f"님의 이미지는 {query[0]}입니다.")
+
+
+@bot.command()
+async def ver(ctx):
+    await ctx.channel.send("Test ver.")
+
+
+@bot.command()
+async def update(ctx):
+    print(ctx.author.id)
+    if ctx.author.id == 720435385703858297:
+        await ctx.channel.send("모든 명령어를 삭제 중입니다.")
+        for i in bot.commands:
+            bot.remove_command(i.name)
+        await ctx.channel.send("업데이트 중입니다.")
+        await ctx.channel.send("업데이트 중에는 봇 이용이 불가능합니다.")
+        await asyncio.sleep(10)
+        sock.sendto("update".encode(), ("127.0.0.1", 8080))
+        sys.exit(1)
+    else:
+        await ctx.channel.send("동건맨 아니면 업뎃 못함 ㅅㄱ")
 
 
 bot.run(token)
