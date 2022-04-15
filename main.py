@@ -62,21 +62,25 @@ async def 떡락(ctx):
 
 @bot.command()
 async def 떡상(ctx):
-    sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
-    cur.execute(sql)
-    query = cur.fetchone()
-    if query is None:
-        await ctx.channel.send("일단 \!등록부터 하고 오셔~")
+    nick = ctx.message.content.replace("!떡상 ", "")
+    if ctx.author.display_name == nick:
+        await ctx.channel.send("으디서 스스로 이미지를 올려!")
     else:
-        nick = ctx.message.content.replace("!떡상 ", "")
-        sql = f"select * from user where(nick=\"{nick}\")"
+        sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
         cur.execute(sql)
         query = cur.fetchone()
-        sql = f"update user set image={query[0] + 1} where(nick=\"{nick}\")"
-        cur.execute(sql)
-        db.commit()
-        print(query)
-        await ctx.channel.send(nick + "님의 이미지가 1 떡상했어요.")
+        if query is None:
+            await ctx.channel.send("일단 \!등록부터 하고 오셔~")
+        else:
+
+            sql = f"select * from user where(nick=\"{nick}\")"
+            cur.execute(sql)
+            query = cur.fetchone()
+            sql = f"update user set image={query[0] + 1} where(nick=\"{nick}\")"
+            cur.execute(sql)
+            db.commit()
+            print(query)
+            await ctx.channel.send(nick + "님의 이미지가 1 떡상했어요.")
 
 
 @bot.command()
