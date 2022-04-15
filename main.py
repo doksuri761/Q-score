@@ -23,7 +23,7 @@ bot = Bot(command_prefix="!")
 
 @bot.event
 async def on_ready():
-    await bot.http.send_message(963786997976150036, "업데이트가 완료되었습니다.")
+    await bot.http.send_message(channel_id=963786997976150036, content="업데이트가 완료되었습니다.")
     sock.sendto(str(os.getpid()).encode(), ('127.0.0.1', 8080))
     print("ready!")
 
