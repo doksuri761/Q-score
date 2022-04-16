@@ -11,7 +11,7 @@ import socket
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
-is_test = True
+is_test = False
 
 if not is_test:
     token = getenv("token")
