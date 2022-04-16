@@ -29,7 +29,7 @@ async def on_ready():
 
 
 @bot.command()
-async def 업리더보드(ctx):
+async def 떡상랭킹(ctx):
     sql = "select * from user"
     cur.execute(sql)
     data = cur.fetchall()
@@ -43,7 +43,7 @@ async def 업리더보드(ctx):
             result[rank] = [people]
     print(result)
     index = 1
-    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드 ", description="누가누가 더 높을까??", color=0xff0000)
+    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드", description="누가누가 더 높을까??", color=0xff0000)
     for i in list(result.keys()):
         users = result.get(i)
         temp = ""
@@ -60,7 +60,7 @@ async def 업리더보드(ctx):
 
 
 @bot.command()
-async def 다운리더보드(ctx):
+async def 떡락랭킹(ctx):
     sql = "select * from user"
     cur.execute(sql)
     data = cur.fetchall()
@@ -73,7 +73,7 @@ async def 다운리더보드(ctx):
         else:
             result[rank] = [people]
     index = 1
-    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드 ", description="누가누가 더 낮을까??", color=0xff0000)
+    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드", description="누가누가 더 낮을까??", color=0xff0000)
     for i in list(result.keys()):
         users = result.get(i)
         temp = ""
