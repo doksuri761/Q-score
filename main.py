@@ -24,7 +24,6 @@ bot = Bot(command_prefix="!")
 
 @bot.event
 async def on_ready():
-    await bot.http.send_message(channel_id=925692979321139282, content="업데이트가 완료되었습니다.")
     sock.sendto(str(os.getpid()).encode(), ('127.0.0.1', 8080))
     print("ready!")
 
@@ -49,8 +48,8 @@ async def 업리더보드(ctx):
         users = result.get(i)
         temp = ""
         for k in users:
-            temp += k + " "
-        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-1]}\n{i}점!", inline=False)
+            temp += k + ", "
+        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-2]}\n{i}점!", inline=False)
         prize[index] = users
         next_index = index + 1 if len(users) == 1 else index + 2
         if next_index > 5:
@@ -79,8 +78,8 @@ async def 다운리더보드(ctx):
         users = result.get(i)
         temp = ""
         for k in users:
-            temp += k + " "
-        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-1]}\n{i}점!", inline=False)
+            temp += k + ", "
+        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-2]}\n{i}점!", inline=False)
         prize[index] = users
         next_index = index + 1 if len(users) == 1 else index + 2
         if next_index > 5:
