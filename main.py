@@ -1,6 +1,7 @@
 # Developed by dgm
 import asyncio
 import os
+import nextcord
 import sys
 from dotenv import load_dotenv
 from os import getenv
@@ -23,9 +24,70 @@ bot = Bot(command_prefix="!")
 
 @bot.event
 async def on_ready():
-    await bot.http.send_message(channel_id=963786997976150036, content="업데이트가 완료되었습니다.")
+    await bot.http.send_message(channel_id=925692979321139282, content="업데이트가 완료되었습니다.")
     sock.sendto(str(os.getpid()).encode(), ('127.0.0.1', 8080))
     print("ready!")
+
+
+@bot.command()
+async def 업리더보드(ctx):
+    sql = "select * from user"
+    cur.execute(sql)
+    data = cur.fetchall()
+    data.sort(reverse=True)
+    result = {}
+    prize = {}
+    for rank, people in data:
+        if rank in result:
+            result[rank].append(people)
+        else:
+            result[rank] = [people]
+    print(result)
+    index = 1
+    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드 ", description="누가누가 더 높을까??", color=0xff0000)
+    for i in list(result.keys()):
+        users = result.get(i)
+        temp = ""
+        for k in users:
+            temp += k + " "
+        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-1]}\n{i}점!", inline=False)
+        prize[index] = users
+        next_index = index + 1 if len(users) == 1 else index + 2
+        if next_index > 5:
+            break
+        else:
+            index = next_index
+    await ctx.send(embed=embed)
+
+
+@bot.command()
+async def 다운리더보드(ctx):
+    sql = "select * from user"
+    cur.execute(sql)
+    data = cur.fetchall()
+    data.sort(reverse=False)
+    result = {}
+    prize = {}
+    for rank, people in data:
+        if rank in result:
+            result[rank].append(people)
+        else:
+            result[rank] = [people]
+    index = 1
+    embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드 ", description="누가누가 더 낮을까??", color=0xff0000)
+    for i in list(result.keys()):
+        users = result.get(i)
+        temp = ""
+        for k in users:
+            temp += k + " "
+        embed.add_field(name=f"{index}등{'!' * (5 - index)}", value=f"{temp[:-1]}\n{i}점!", inline=False)
+        prize[index] = users
+        next_index = index + 1 if len(users) == 1 else index + 2
+        if next_index > 5:
+            break
+        else:
+            index = next_index
+    await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -57,7 +119,6 @@ async def 떡락(ctx):
         sql = f"update user set image={query[0] - 1} where(nick=\"{nick}\")"
         cur.execute(sql)
         db.commit()
-        print(query)
         await ctx.channel.send(nick + "님의 이미지가 1 떡락했어요.")
 
 
@@ -80,7 +141,6 @@ async def 떡상(ctx):
             sql = f"update user set image={query[0] + 1} where(nick=\"{nick}\")"
             cur.execute(sql)
             db.commit()
-            print(query)
             await ctx.channel.send(nick + "님의 이미지가 1 떡상했어요.")
 
 
@@ -106,7 +166,6 @@ async def ver(ctx):
 
 @bot.command()
 async def update(ctx):
-    print(ctx.author.id)
     if ctx.author.id == 720435385703858297:
         await ctx.channel.send("모든 명령어를 삭제 중입니다.")
         for i in bot.commands:
