@@ -75,7 +75,7 @@ async def sql(ctx):
 
 
 @bot.command()
-async def sql(ctx):
+async def sqlc(ctx):
     if ctx.author.id == 720435385703858297:
         sql = ctx.message.content.replace("!sql ", "")
         cur.execute(sql)
