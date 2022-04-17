@@ -12,9 +12,9 @@ from funcs import image, leaderboard, register, update
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
-is_test = True
+is_test = getenv("is_test")
 
-if not is_test:
+if is_test is None:
     token = getenv("token")
 else:
     token = getenv("test_token")
