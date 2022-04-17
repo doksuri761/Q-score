@@ -84,4 +84,12 @@ async def sqlc(ctx):
         await ctx.send("동건맨 아니잖슴 ㅡㅡ")
 
 
+@bot.command()
+async def 깃허브(ctx):
+    embed = discord.Embed(title="깃헙 링크는 여기.")
+    embed.add_field(name="99덕 파티 공식 깃헙", value="https://github.com/99duck-discord/99duck-bot", inline=False)
+    embed.add_field(name="ㄷㄱㅁ 개인 깃헙", value="https://github.com/doksuri761/Q-score", inline=True)
+    await ctx.send(embed=embed)
+
+
 bot.run(token)
