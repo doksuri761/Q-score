@@ -4,6 +4,7 @@ import socket
 import sqlite3
 from os import getenv
 
+import nextcord
 from dotenv import load_dotenv
 from nextcord.ext.commands import Bot
 
