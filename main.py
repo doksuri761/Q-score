@@ -74,4 +74,14 @@ async def sql(ctx):
         await ctx.send("동건맨 아니잖슴 ㅡㅡ")
 
 
+@bot.command()
+async def sql(ctx):
+    if ctx.author.id == 720435385703858297:
+        sql = ctx.message.content.replace("!sql ", "")
+        cur.execute(sql)
+        await ctx.channel.send(cur.fetchall())
+    else:
+        await ctx.send("동건맨 아니잖슴 ㅡㅡ")
+
+
 bot.run(token)
