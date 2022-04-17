@@ -1,14 +1,13 @@
 # Developed by dgm
-import asyncio
 import os
-import nextcord
-import sys
-from dotenv import load_dotenv
-from os import getenv
-from nextcord.ext.commands import Bot
-import sqlite3
 import socket
-from funcs import image, leaderboard, register, update
+import sqlite3
+from os import getenv
+
+from dotenv import load_dotenv
+from nextcord.ext.commands import Bot
+
+from funcs import image, leaderboard, register, updater
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
@@ -61,7 +60,7 @@ async def 이미지(ctx):
 
 @bot.command()
 async def update(ctx):
-    await update.update(ctx, sock)
+    await updater.update(ctx, sock)
 
 
 bot.run(token)
