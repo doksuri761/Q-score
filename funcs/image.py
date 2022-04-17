@@ -49,7 +49,7 @@ async def down(ctx, cur, db):
             sql = f"update user set image={query[0] - 4} where(nick=\"{nick}\")"
             cur.execute(sql)
             db.commit()
-            await ctx.channel.send(nick + "님의 이미지가 3% 확률에 의하여 1 떡락했어요.")
+            await ctx.channel.send(nick + "님의 이미지가 3% 확률에 의하여 4 떡락했어요.")
         elif amount == 100:
             sql = f"update user set image={query[0] - 5} where(nick=\"{nick}\")"
             cur.execute(sql)
