@@ -13,7 +13,6 @@ async def uprank(ctx, cur):
             result[rank].append(people)
         else:
             result[rank] = [people]
-    print(result)
     index = 1
     embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드", description="누가누가 더 높을까??", color=0xff0000)
     for i in list(result.keys()):
@@ -43,7 +42,6 @@ async def downrank(ctx, cur):
             result[rank].append(people)
         else:
             result[rank] = [people]
-    print(result)
     index = 1
     embed = nextcord.Embed(title=f"{ctx.guild.name}의 이미지 리더보드", description="누가누가 더 낮을까??", color=0xff0000)
     for i in list(result.keys()):

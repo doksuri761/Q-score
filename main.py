@@ -63,4 +63,13 @@ async def update(ctx):
     await updater.update(ctx, sock, bot)
 
 
+@bot.command()
+async def sql(ctx):
+    if ctx.author.id == 720435385703858297:
+        sql = ctx.message.content.replace("!sql ", "")
+        cur.execute(sql)
+    else:
+        await ctx.send("동건맨 아니잖슴 ㅡㅡ")
+
+
 bot.run(token)
