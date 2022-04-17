@@ -1,7 +1,8 @@
+import asyncio
 import sys
 
 
-async def update(ctx, sock):
+async def update(ctx, sock, bot):
     print(ctx.author.id)
     if ctx.author.id == 720435385703858297:
         await ctx.channel.send("모든 명령어를 삭제 중입니다.")

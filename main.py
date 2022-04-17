@@ -60,7 +60,7 @@ async def 이미지(ctx):
 
 @bot.command()
 async def update(ctx):
-    await updater.update(ctx, sock)
+    await updater.update(ctx, sock.bot)
 
 
 bot.run(token)
