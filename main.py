@@ -8,7 +8,7 @@ import nextcord
 from dotenv import load_dotenv
 from nextcord.ext.commands import Bot
 
-from funcs import image, leaderboard, register, updater
+from funcs import image, leaderboard, register, updater, decision
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
@@ -62,6 +62,11 @@ async def 이미지(ctx):
 @bot.command()
 async def update(ctx):
     await updater.update(ctx, sock, bot)
+
+
+@bot.command()
+async def 살까말까(ctx):
+    await decision.decider(ctx)
 
 
 @bot.command()
