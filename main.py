@@ -29,19 +29,20 @@ async def on_ready():
     print("ready!")
 
 
-@bot.event
-async def on_message(message):
-    print(message.channel.id)
-    # if message.channel.id != 960339361520558080 or message.channel.id != 963786997976150036:
-    #     sql = f"select * from warning where(user_id={message.author.id})"
-    #     cur.execute(sql)
-    #     warnings = cur.fetchall()
-    #     if not warnings:
-    #         await bot.process_commands(message)
-    #     else:
-    #         if warnings == 3:
-    #             await message.author.timeout(timeout=datetime.timedelta(minutes=5))
-    #             await message.channel.send(message.author.display_name + "님은 경고 3회 누적으로 인해 5분 타임아웃 되었습니다.")
+#
+# @bot.event
+# async def on_message(message):
+#     print(message.channel.id)
+# if message.channel.id != 960339361520558080 or message.channel.id != 963786997976150036:
+#     sql = f"select * from warning where(user_id={message.author.id})"
+#     cur.execute(sql)
+#     warnings = cur.fetchall()
+#     if not warnings:
+#         await bot.process_commands(message)
+#     else:
+#         if warnings == 3:
+#             await message.author.timeout(timeout=datetime.timedelta(minutes=5))
+#             await message.channel.send(message.author.display_name + "님은 경고 3회 누적으로 인해 5분 타임아웃 되었습니다.")
     #         elif warnings == 4:
     #             await message.author.timeout(timeout=datetime.timedelta(minutes=10))
     #             await message.channel.send(message.author.display_name + "님은 경고 4회 누적으로 인해 10분 타임아웃 되었습니다.")
