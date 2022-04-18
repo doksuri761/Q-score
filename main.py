@@ -32,7 +32,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.channel.name not in ["명령어", "인기도"]:
+    if message.channel.id not in [960339361520558080, 963786997976150036]:
         sql = f"select * from warning where(user_id={message.author.id})"
         cur.execute(sql)
         warnings = cur.fetchall()
