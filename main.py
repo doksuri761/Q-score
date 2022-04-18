@@ -47,19 +47,19 @@ async def on_message(message):
                     cur.execute(sql)
                     db.commit()
                     await message.channel.send(message.author.display_name + "님 경고 1점 추가되었습니다.")
-                elif warnings == 3:
+                elif warnings[0][1] == 3:
                     await message.author.timeout(timeout=datetime.timedelta(minutes=5))
                     await message.channel.send(message.author.display_name + "님은 경고 3회 누적으로 인해 5분 타임아웃 되었습니다.")
                     sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
                     cur.execute(sql)
                     db.commit()
-                elif warnings == 4:
+                elif warnings[0][1] == 4:
                     await message.author.timeout(timeout=datetime.timedelta(minutes=10))
                     await message.channel.send(message.author.display_name + "님은 경고 4회 누적으로 인해 10분 타임아웃 되었습니다.")
                     sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
                     cur.execute(sql)
                     db.commit()
-                elif warnings >= 5:
+                elif warnings[0][1] >= 5:
                     await message.channel.send("경고 누적으로 인해 봇 이용이 차단되셨습니다.")
                     sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
                     cur.execute(sql)
