@@ -1,5 +1,4 @@
 # Developed by dgm
-import datetime
 import os
 import socket
 import sqlite3
@@ -33,46 +32,10 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.content.split()[0] not in command_list:
-        pass
+    if message.channel.id == 960339361520558080 or message.channel.id == 963786997976150036:
+        await bot.process_commands(message)
     else:
-        if message.author == bot.user:
-            pass
-        else:
-            if message.channel.id != 960339361520558080 or message.channel.id != 963786997976150036:
-                sql = f"select * from warning where(user_id={message.author.id})"
-                cur.execute(sql)
-                warnings = cur.fetchall()
-                if not warnings:
-                    sql = f"insert into warning values({message.author.id}, 1)"
-                    cur.execute(sql)
-                    db.commit()
-                    await message.channel.send(message.author.display_name + "님 경고 1점 추가되었습니다.")
-                elif warnings[0][1] == 3:
-                    await message.author.timeout(timeout=datetime.timedelta(minutes=5))
-                    await message.channel.send(message.author.display_name + "님은 경고 3회 누적으로 인해 5분 타임아웃 되었습니다.")
-                    sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
-                    cur.execute(sql)
-                    db.commit()
-                elif warnings[0][1] == 4:
-                    await message.author.timeout(timeout=datetime.timedelta(minutes=10))
-                    await message.channel.send(message.author.display_name + "님은 경고 4회 누적으로 인해 10분 타임아웃 되었습니다.")
-                    sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
-                    cur.execute(sql)
-                    db.commit()
-                elif warnings[0][1] >= 5:
-                    await message.channel.send("경고 누적으로 인해 봇 이용이 차단되셨습니다.")
-                    sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
-                    cur.execute(sql)
-                    db.commit()
-                else:
-                    sql = f"update warning set num={warnings[0][1] + 1} where(user_id={message.author.id})"
-                    cur.execute(sql)
-                    db.commit()
-                    await message.channel.send(message.author.display_name + "님 경고 1점 추가되었습니다.")
-                    await message.delete()
-            else:
-                await bot.process_commands(message)
+        pass
 
 
 @bot.command()
