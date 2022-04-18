@@ -1,4 +1,5 @@
 # Developed by dgm
+import datetime
 import os
 import socket
 import sqlite3
@@ -27,6 +28,29 @@ bot = Bot(command_prefix="!")
 async def on_ready():
     sock.sendto(str(os.getpid()).encode(), ('127.0.0.1', 8080))
     print("ready!")
+
+
+@bot.event
+async def on_message(message):
+    if message.channel.name not in ["명령어", "인기도"]:
+        sql = f"select * from warning where(user_id={message.author.id})"
+        cur.execute(sql)
+        warnings = cur.fetchall()[0][1]
+        if warnings == 3:
+            await message.author.timeout(timeout=datetime.timedelta(minutes=5))
+            await message.channel.send(message.author.display_name + "님은 경고 3회 누적으로 인해 5분 타임아웃 되었습니다.")
+        elif warnings == 4:
+            await message.author.timeout(timeout=datetime.timedelta(minutes=10))
+            await message.channel.send(message.author.display_name + "님은 경고 4회 누적으로 인해 10분 타임아웃 되었습니다.")
+        elif warnings == 5:
+            await message.channel.send("경고 누적으로 인해 봇 이용이 차단되셨습니다.")
+        else:
+            sql = f"update warning num={warnings + 1} where(user_id={message.author.id})"
+            cur.execute(sql)
+            db.commit()
+        await ctx.message.delete()
+    else:
+        await bot.process_commands(message)
 
 
 @bot.command()
