@@ -35,7 +35,7 @@ async def on_message(message):
     if message.channel.name not in ["명령어", "인기도"]:
         sql = f"select * from warning where(user_id={message.author.id})"
         cur.execute(sql)
-        warnings = cur.fetchall()[0][1]
+        warnings = cur.fetchall()
         if not warnings:
             await bot.process_commands(message)
         else:
@@ -48,12 +48,10 @@ async def on_message(message):
             elif warnings == 5:
                 await message.channel.send("경고 누적으로 인해 봇 이용이 차단되셨습니다.")
             else:
-                sql = f"update warning num={warnings + 1} where(user_id={message.author.id})"
+                sql = f"update warning num={warnings[0][1] + 1} where(user_id={message.author.id})"
                 cur.execute(sql)
                 db.commit()
             await ctx.message.delete()
-        else:
-        await bot.process_commands(message)
 
 
 @bot.command()
