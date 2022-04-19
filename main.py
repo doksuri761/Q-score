@@ -35,13 +35,13 @@ async def on_message(message):
     print(message.content)
     cur.execute("select * from warning")
     ban_ids = map(lambda x: x[0], cur.fetchall())
-    if message.author.id in ban_ids:
-        await message.channel.send(message.author.mention + "님은 관리자에 의해 봇 이용이 금지되었습니다.")
-    else:
-        if message.channel.id == 960339361520558080 or message.channel.id == 963786997976150036:
-            await bot.process_commands(message)
+    if message.channel.id == 960339361520558080 or message.channel.id == 963786997976150036:
+        if message.author.id in ban_ids:
+            await message.channel.send(message.author.mention + "님은 관리자에 의해 봇 이용이 금지되었습니다.")
         else:
-            pass
+            await bot.process_commands(message)
+    else:
+        pass
 
 
 @bot.command()
