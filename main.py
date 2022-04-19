@@ -35,7 +35,7 @@ async def on_message(message):
     cur.execute("select * from warning")
     ban_ids = map(lambda x: x[0], cur.fetchall())
     if message.author.id in ban_ids:
-        pass
+        await ctx.channel.send(message.author.mention + "님은 관리자에 의해 봇 이용이 금지되었습니다.")
     else:
         if message.channel.id == 960339361520558080 or message.channel.id == 963786997976150036:
             await bot.process_commands(message)
@@ -112,11 +112,11 @@ async def sqlc(ctx):
 @bot.command()
 async def 차단(ctx):
     if ctx.author.id in [720435385703858297, 302493418578247680, 921777773356408834]:
-        user_id = ctx.message.content.split(" ", "")[1]
+        user_id = ctx.message.content.replace("!차단 ", "")
         sql = f"insert into warning values({user_id})"
         cur.execute(sql)
         db.commit()
-        await ctx.channel.send(bot.get_user(int(user_id)).mention + "님은 관리자에 의해 봇 이용이 금지되었습니다.")
+        await ctx.channel.send("차단이 완료되었습니다.")
     else:
         await ctx.channel.send("관리자 권한 이상만 사용 가능합니다.")
 
