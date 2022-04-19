@@ -2,7 +2,7 @@ import random
 
 
 async def up(ctx, cur, db):
-    nick = ctx.message.content.replace("!떡상 ", "")
+    nick = ctx.message.content.replace("!떡상 ", "").replace("@", "")
     if nick != ctx.author.display_name:
         sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
         cur.execute(sql)
@@ -23,7 +23,7 @@ async def up(ctx, cur, db):
 
 
 async def down(ctx, cur, db):
-    nick = ctx.message.content.replace("!떡락 ", "")
+    nick = ctx.message.content.replace("!떡락 ", "").replace("@", "")
     if nick != ctx.author.display_name:
         sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
         cur.execute(sql)
@@ -71,7 +71,7 @@ async def down(ctx, cur, db):
 
 
 async def get_image(ctx, cur):
-    nick = ctx.message.content.replace("!이미지", "")
+    nick = ctx.message.content.replace("!이미지", "").replace("@", "")
     if nick == "":
         sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
         cur.execute(sql)
