@@ -2,7 +2,7 @@ import nextcord
 
 
 async def uprank(ctx, cur):
-    sql = "select * from user"
+    sql = "select image,nick from user"
     cur.execute(sql)
     data = cur.fetchall()
     data.sort(reverse=True)
@@ -31,7 +31,7 @@ async def uprank(ctx, cur):
 
 
 async def downrank(ctx, cur):
-    sql = "select * from user"
+    sql = "select image, nick from user"
     cur.execute(sql)
     data = cur.fetchall()
     data.sort(reverse=False)

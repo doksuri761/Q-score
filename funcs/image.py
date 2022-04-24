@@ -4,7 +4,7 @@ import random
 async def up(ctx, cur, db):
     nick = int(ctx.message.content.replace("!떡상 ", "")[2:-1])
     if nick != ctx.author.id:
-        sql = f"select * from user where(user_id=\"{ctx.author.display_name}\")"
+        sql = f"select * from user where(user_id=\"{ctx.author.id}\")"
         cur.execute(sql)
         query = cur.fetchone()
         if query is None:
@@ -24,8 +24,8 @@ async def up(ctx, cur, db):
 
 async def down(ctx, cur, db):
     nick = int(ctx.message.content.replace("!떡락 ", "")[2:-1])
-    if nick != ctx.author.id:
-        sql = f"select * from user where(user_id=\"{ctx.author.display_name}\")"
+    if int(ctx.author.id) != nick:
+        sql = f"select * from user where(user_id=\"{ctx.author.id}\")"
         cur.execute(sql)
         query = cur.fetchone()
         if query is None:
@@ -40,7 +40,7 @@ async def down(ctx, cur, db):
                 cur.execute(sql)
                 db.commit()
                 await ctx.channel.send(query[1] + "님의 이미지가 80% 확률에 의하여 1 떡락했어요.")
-            elif 91 > amount < 81:
+            elif 91 > amount > 81:
                 sql = f"update user set image={query[0] - 2} where(user_id=\"{nick}\")"
                 cur.execute(sql)
                 db.commit()
@@ -72,11 +72,11 @@ async def down(ctx, cur, db):
 async def get_image(ctx, cur):
     nick = ctx.message.content.replace("!이미지", "")
     if nick == "":
-        sql = f"select * from user where(user_id=\"{ctx.author.display_name}\")"
+        sql = f"select * from user where(nick=\"{ctx.author.display_name}\")"
         cur.execute(sql)
         query = cur.fetchone()
         await ctx.channel.send(ctx.author.mention + f"님의 이미지는 {query[0]}입니다.")
-    elif nick.find("@") == 1:
+    elif nick.find("@") == 2:
         nick = nick[2:-1]
         sql = f"select * from user where(user_id=\"{nick}\")"
         cur.execute(sql)

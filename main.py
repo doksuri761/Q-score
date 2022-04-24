@@ -8,7 +8,7 @@ import nextcord
 from dotenv import load_dotenv
 from nextcord.ext.commands import Bot
 
-from funcs import image, leaderboard, register, updater, decision
+from funcs import image, leaderboard, register, updater, decision, help
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 env = load_dotenv(".env")
@@ -128,6 +128,11 @@ async def 깃허브(ctx):
     embed.add_field(name="99덕 파티 공식 깃헙", value="https://github.com/99duck-discord/99duck-bot", inline=False)
     embed.add_field(name="ㄷㄱㅁ 개인 깃헙", value="https://github.com/doksuri761/Q-score", inline=True)
     await ctx.send(embed=embed)
+
+
+@bot.command()
+async def 도움(ctx):
+    await help.helpf(ctx)
 
 
 bot.run(token)
